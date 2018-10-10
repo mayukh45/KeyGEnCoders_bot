@@ -1,6 +1,7 @@
 import discord
-import discord.user as user
+import os
 test_id = 499296940358369280
+
 
 client = discord.Client()
 print(discord.version_info)
