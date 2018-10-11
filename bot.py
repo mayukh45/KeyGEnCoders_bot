@@ -1,32 +1,54 @@
 import discord
 import os
-test_id = 499296940358369280
+from checks import is_int
+roles
 
 
-client = discord.Client()
+bot = Bot(command_prefix="#")
 print(discord.version_info)
 
 
 
-@client.event
+@bot.event
 async def on_message(message):
-    print(":>")
 
-    await client.send_message(message.channel, 'Why')
+    if message.content.size == 4 and is_int(message.content):
+        #Have to add roles
+        
+        await message.channel.send("Your role is added!")
 
-    print(type(client.messages))
+    #print(type(bot.messages))
 
 
 
-@client.event
+@bot.event
 async def on_ready():
+    global roles
+    guild = bot.guilds
+    print(guild)
+    guild = guild[0]
+    roles = guild.roles
 
-    print('Logged in as')
-    print(client.guilds)
-    users =  list(client.users)
-    for users in users:
-        print(users.name)
-    print(client.get_channel(test_id))
+    all = bot.get_all_members()
+    for member in all:
+        if member.top_role.is_default():
+            if member.dm_channel == None:
+                await member.create_dm()
+                dmchannel = member.dm_channel
+                print(member.name)
+                await dmchannel.send("Hey Warrior, It seems no roles is assigned to you!")
+                await dmchannel.send("Can you please provide your passout year?")
 
 
-client.run(os.getenv('TOKEN'))
+@bot.event
+async def on_member_join(member):
+    await member.create_dm()
+    dmchannel = member.dm_channel
+    await dmchannel.send("Welcome warrior!, Can you please provide your passout year?")
+
+
+
+
+
+
+bot.run(os.getenv('TOKEN'))
