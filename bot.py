@@ -1,4 +1,5 @@
 import discord
+import os
 from discord.ext.commands import Bot
 from checks import is_int
 from discord.ext import commands
