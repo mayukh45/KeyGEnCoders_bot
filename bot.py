@@ -32,7 +32,7 @@ async def on_ready():
                 dmchannel = member.dm_channel
                 print(member.name)
                 await dmchannel.send("Hey Warrior, It seems no roles is assigned to you!")
-                await dmchannel.send("Type #add_role 'Your passout year' to get your role! :)")
+                await dmchannel.send("Type #setrole 'Your passout year' to get your role! :)")
 
 
 @bot.command()
@@ -51,7 +51,7 @@ async def setrole(ctx, arg):
         auth = guild.get_member(id)
         if len(auth.roles)>1:
             await ctx.trigger_typing()
-            await ctx.send("You already have a role assigned to you!, If you want to change it contact an admin :)")
+            await ctx.send("You already have a role assigned to you! If you want to change it contact an admin :)")
             
                 
         else:
@@ -72,7 +72,7 @@ async def on_member_join(member):
 
     await dmchannel.trigger_typing()
     await dmchannel.send("Welcome warrior!, Welcome to KeyGEnCoders Server!")
-    await dmchannel.send("Type #add_role 'Your passout year' to get started :)")
+    await dmchannel.send("Type #setrole 'Your passout year' to get started :)")
 
 
 
