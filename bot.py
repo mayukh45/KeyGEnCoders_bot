@@ -49,11 +49,16 @@ async def add_role(ctx, arg):
         auth = ctx.message.author
         id = auth.id
         auth = guild.get_member(id)
-        args = []
-        args.append(roles[i])
-        await auth.add_roles(*args)
-        
-        await ctx.send("Role added!")
+        if len(auth.roles)>2:
+            await ctx.trigger_typing()
+            await ctx.send("You already have a role assigned to you!, If you want to change it contact an admin :)")
+            
+                
+        else:
+            args = []
+            args.append(roles[i])
+            await auth.add_roles(*args)
+            await ctx.send("Role added!")
     else :
         await ctx.trigger_typing()
         await ctx.send("Oops there are no such roles now, Please contact any admin for assistance")
