@@ -1,30 +1,23 @@
 import discord
-import os
-from checks import is_int
 from discord.ext.commands import Bot
+from checks import is_int
 from discord.ext import commands
 
-
 roles = []
-guilds = []
-
-
+guild = None
+members = []
 bot = Bot(command_prefix="#")
-#print(discord.version_info)
-
 
 
 @bot.event
 async def on_message(message):
-    #bot.get_command(beep)
     await bot.process_commands(message)
-    #print(type(bot.messages))
-
-
+    
 
 @bot.event
 async def on_ready():
     global roles
+    global guild
     guild = bot.guilds
 
     guild = guild[0]
@@ -33,12 +26,12 @@ async def on_ready():
     all = bot.get_all_members()
     for member in all:
         if member.top_role.is_default():
-            if type(member.dm_channel) == None:
+            if member.dm_channel is None:
                 await member.create_dm()
                 dmchannel = member.dm_channel
                 print(member.name)
-               # await dmchannel.send("Hey Warrior, It seems no roles is assigned to you!")
-               # await dmchannel.send("Can you please provide your passout year?")
+                await dmchannel.send("Hey Warrior, It seems no roles is assigned to you!")
+                await dmchannel.send("Type #add_role 'Your passout year' to get your role! :)")
 
 
 @bot.command()
@@ -53,15 +46,16 @@ async def add_role(ctx, arg):
 
     if f:
         auth = ctx.message.author
-        print("lol")
-        print(roles[i])
+        id = auth.id
+        auth = guild.get_member(id)
         args = []
         args.append(roles[i])
         await auth.add_roles(*args)
+        
         await ctx.send("Role added!")
     else :
+        await ctx.trigger_typing()
         await ctx.send("Oops there are no such roles now, Please contact any admin for assistance")
-
 
 
 @bot.event
@@ -69,6 +63,8 @@ async def on_member_join(member):
     await member.create_dm()
 
     dmchannel = member.dm_channel
+
+    await dmchannel.trigger_typing()
     await dmchannel.send("Welcome warrior!, Welcome to KeyGEnCoders Server!")
     await dmchannel.send("Type #add_role 'Your passout year' to get started :)")
 
