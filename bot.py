@@ -36,7 +36,7 @@ async def on_ready():
 
 
 @bot.command()
-async def add_role(ctx, arg):
+async def setrole(ctx, arg):
     global guilds
     global roles
     f = False
