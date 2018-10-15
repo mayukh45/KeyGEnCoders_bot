@@ -102,7 +102,7 @@ async def count(ctx,arg):
     """ Counts members of a batch (YYYY) or all members (all) """
 
     if arg == "all":
-        await ctx.send("The total count of all members in guild is {0.member_count}".format(guild))
+        await ctx.send("Total number members in guild is {0.member_count}".format(guild))
     elif not(is_year(arg)):
         await ctx.send("The correct format is !count YYYY")
 
