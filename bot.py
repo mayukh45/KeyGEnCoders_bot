@@ -55,7 +55,7 @@ async def on_ready():
                 await dmchannel.send("Type !setyear 'Your passout year' to get your role! :)")
 
 
-@bot.command()
+@bot.command(hidden=True)
 async def setyear(ctx, arg):
     """ Sets your passout year as a role """
     global guilds
@@ -95,7 +95,7 @@ async def setyear(ctx, arg):
         await ctx.send("The correct format is !setyear YYYY ")
 
 
-@bot.command()
+@bot.command(hidden=True)
 async def setcurr(ctx,arg):
     """ Yearly update of colour (Only for admins)"""
     global colours
