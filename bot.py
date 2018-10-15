@@ -17,11 +17,12 @@ bot = Bot(command_prefix=["!"],description=desc)
 def get_colours():
     f = open("colour.json",'r')
     c = json.loads(f.read())
-    for i in range(1,6):
-        h,s,v = tuple(c[str(i)])
-        colours.append(discord.Colour.from_hsv(h,s,v))
+    for i in range(1, 6):
+        colours.append(discord.Colour(int(c[str(i)], 16)))
 
 get_colours()
+
+
 @bot.event
 async def on_message(message):
     await bot.process_commands(message)
@@ -36,7 +37,7 @@ async def on_ready():
 
     guild = guild[0]
     roles = guild.roles
-    
+   # print(roles)
     #for role in roles:
       #  if is_year(role.name) and rol:
       #      colours.append(role.colour)
@@ -114,9 +115,11 @@ async def setcurr(ctx,arg):
             if is_year(role.name):
                 if int(role.name) < arg:
                     await role.edit(colour=colours[4])
+                    print("alumni")
 
                 else:
-                    await role.edit(colour=colours[3-arg-int(role.name)])
+                    await role.edit(colour=colours[3+arg-int(role.name)])
+        await ctx.send("Role colours updated!")
 
 
 @bot.event
