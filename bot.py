@@ -9,7 +9,6 @@ from discord.ext import commands
 colours = []
 roles = []
 guild = None
-members = []
 desc = '''A bot made by server admins to manage KeyGEnCoders discussion Server'''
 bot = Bot(command_prefix=["!"],description=desc)
 
@@ -19,6 +18,14 @@ def get_colours():
     c = json.loads(f.read())
     for i in range(1, 6):
         colours.append(discord.Colour(int(c[str(i)], 16)))
+
+
+def get_year(member):
+    roles = member.roles
+    for role in roles:
+        if is_year(role.name):
+            return role.name
+
 
 get_colours()
 
@@ -37,15 +44,10 @@ async def on_ready():
 
     guild = guild[0]
     roles = guild.roles
-   # print(roles)
-    #for role in roles:
-      #  if is_year(role.name) and rol:
-      #      colours.append(role.colour)
-
     game = discord.Game(name="Judgement Day")
     await bot.change_presence(status=discord.Status.idle,activity=game)
-    all = bot.get_all_members()
-    for member in all:
+    members = bot.get_all_members()
+    for member in members:
         if member.top_role.is_default():
             if member.dm_channel is None:
                 await member.create_dm()
@@ -57,7 +59,9 @@ async def on_ready():
 
 @bot.command(hidden=True)
 async def setyear(ctx, arg):
-    """ Sets your passout year as a role """
+    """
+    Sets your passout year as a role
+    """
     global guilds
     global roles
     f = False
@@ -94,10 +98,31 @@ async def setyear(ctx, arg):
     else:
         await ctx.send("The correct format is !setyear YYYY ")
 
+@bot.command()
+async def count(ctx,arg):
+    """ Counts members of a batch (YYYY) or all members (all) """
+
+    if arg == "all":
+        await ctx.send("The total count is {0.member_count}".format(guild))
+    elif not(is_year(arg)):
+        await ctx.send("The correct format is !count YYYY")
+
+    else:
+        c = 0
+        members = bot.get_all_members()
+        for member in members:
+            print("lol")
+            if arg==get_year(member):
+                c+=+1
+                print("lol")
+        await ctx.send("The total members of batch {0} is {1}".format(arg,c))
+
 
 @bot.command(hidden=True)
 async def setcurr(ctx,arg):
-    """ Yearly update of colour (Only for admins)"""
+    """
+    Yearly update of colour (Only for admins)
+    """
     global colours
     print(colours)
     if is_year(arg):
@@ -131,7 +156,6 @@ async def on_member_join(member):
 
     await dmchannel.send("Welcome {0.mention}!, Welcome to KeyGEnCoders Server!".format(member))
     await dmchannel.send("Type !setyear 'Your passout year' to get started :)")
-
 
 
 bot.run(os.getenv('TOKEN'))
