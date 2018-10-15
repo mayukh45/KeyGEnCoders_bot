@@ -10,7 +10,7 @@ colours = []
 roles = []
 guild = None
 desc = '''A bot made by server admins to manage KeyGEnCoders discussion Server'''
-bot = Bot(command_prefix=["!"],description=desc)
+bot = Bot(command_prefix=commands.when_mentioned_or('!'),description=desc)
 
 
 def get_colours():
