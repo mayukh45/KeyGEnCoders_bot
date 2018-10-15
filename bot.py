@@ -52,7 +52,6 @@ async def on_ready():
             if member.dm_channel is None:
                 await member.create_dm()
                 dmchannel = member.dm_channel
-                print(member.name)
                 await dmchannel.send("Hey Warrior, It seems no roles is assigned to you!")
                 await dmchannel.send("Type !setyear 'Your passout year' to get your role! :)")
 
@@ -111,10 +110,10 @@ async def count(ctx,arg):
         c = 0
         members = bot.get_all_members()
         for member in members:
-            print("lol")
+            #print("lol")
             if arg==get_year(member):
                 c+=+1
-                print("lol")
+                #print("lol")
         await ctx.send("The total members of batch {0} is {1}".format(arg,c))
 
 
@@ -140,7 +139,7 @@ async def setcurr(ctx,arg):
             if is_year(role.name):
                 if int(role.name) < arg:
                     await role.edit(colour=colours[4])
-                    print("alumni")
+                    #print("alumni")
 
                 else:
                     await role.edit(colour=colours[3+arg-int(role.name)])
