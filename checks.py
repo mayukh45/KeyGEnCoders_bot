@@ -7,7 +7,5 @@ def is_int(n):
         return False
 
 def is_year(n):
-    if len(n)==4 and is_int(n):
-        return True
-    else:
-        return False
+    return len(n)==4 and is_int(n)
+       
