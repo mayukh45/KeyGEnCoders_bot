@@ -1,13 +1,19 @@
+import asyncio
 import discord
 import os
 import json
 from discord.ext.commands import Bot
 from checks import is_year
 from discord.ext import commands
+
+from mongodb_connector import MongoDBConnector
+
 roles = []
 guild = None
 desc = 'A bot made by server admins to manage KeyGEnCoders discussion Server'
-bot = Bot(command_prefix=commands.when_mentioned_or("!"),description=desc)
+loop = asyncio.get_event_loop()
+bot = Bot(command_prefix=commands.when_mentioned_or("!"), description=desc, loop=loop)
+db_connector = MongoDBConnector(os.getenv('MONGODB_SRV'), db_name='discord_db', loop=loop)
 
 with open("colour.json") as file:
     colours_hex = json.load(file)
