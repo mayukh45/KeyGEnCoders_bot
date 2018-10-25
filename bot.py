@@ -40,7 +40,7 @@ async def on_ready():
     await bot.change_presence(status=discord.Status.idle, activity=game)
     members = bot.get_all_members()
     for member in members:
-        if member.top_role.is_default() and (member.id not in dmed_members):
+        if member.id not in dmed_members:
             if member.dm_channel is None:
                 await member.create_dm()
             dmchannel = member.dm_channel
