@@ -31,7 +31,7 @@ def get_year(member):
 async def on_ready():
     global roles
     global guild
-    dmed_members = db_connector.get_all_members()
+    dmed_members = await db_connector.get_all_members()
 
     guild = bot.guilds
     guild = guild[0]
