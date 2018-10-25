@@ -81,7 +81,7 @@ async def setyear(ctx, arg):
 
 @bot.command()
 async def setnick(ctx, arg):
-    """Sets username of a member"""
+    """Sets nickname of a member"""
     member = guild.get_member(ctx.message.author.id)
     await member.edit(nick=arg)
     await ctx.send("Nickname added!")
