@@ -9,15 +9,16 @@ from discord.ext import commands
 from mongodb_connector import MongoDBConnector
 
 roles = []
-guild = None
 desc = 'A bot made by server admins to manage KeyGEnCoders discussion Server'
 loop = asyncio.get_event_loop()
 bot = Bot(command_prefix=commands.when_mentioned_or("!"), description=desc, loop=loop)
 db_connector = MongoDBConnector(os.getenv('MONGODB_SRV'), db_name='discord_db', loop=loop)
+guild = None
 
 with open("colour.json") as file:
     colours_hex = json.load(file)
     colours = [discord.Colour(int(colour, 16)) for colour in colours_hex]
+
 
 
 def get_year(member):
@@ -30,6 +31,7 @@ def get_year(member):
 async def on_ready():
     global roles
     global guild
+    dmed_members = db_connector.get_all_members()
 
     guild = bot.guilds
     guild = guild[0]
@@ -38,11 +40,12 @@ async def on_ready():
     await bot.change_presence(status=discord.Status.idle, activity=game)
     members = bot.get_all_members()
     for member in members:
-        if member.top_role.is_default():
+        if member.top_role.is_default() and (member.id not in dmed_members):
             if member.dm_channel is None:
                 await member.create_dm()
             dmchannel = member.dm_channel
             await dmchannel.send("Hey Warrior, It seems no roles is assigned to you, Type !setyear 'Your passout year' to get your role! :) ")
+            await db_connector.put_member(member.id)
 
 
 @bot.command(hidden=True)
@@ -74,6 +77,14 @@ async def setyear(ctx, arg):
 
     else:
         await ctx.send("The correct format is !setyear YYYY ")
+
+
+@bot.command()
+async def setnick(ctx, arg):
+    """Sets username of a member"""
+    member = guild.get_member(ctx.message.author.id)
+    await member.edit(nick=arg)
+    await ctx.send("Nickname added!")
 
 
 @bot.command()
@@ -116,7 +127,7 @@ async def on_member_join(member):
     if member.dm_channel is None:
         await member.create_dm()
     dmchannel = member.dm_channel
-    await dmchannel.send("Welcome to KeyGEnCoders Server!, Type !setyear 'Your passout year' to get started :)")
+    await dmchannel.send("Welcome to KeyGEnCoders Server!, Type !setyear <Your passout year> to get started :)\nYou can also set your nickname in server by !setnick <Your desired nickname>")
 
 
 bot.run(os.getenv('TOKEN'))
