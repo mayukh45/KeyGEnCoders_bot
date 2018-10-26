@@ -42,16 +42,14 @@ async def on_ready():
     await bot.change_presence(status=discord.Status.idle, activity=game)
     members = bot.get_all_members()
     for member in members:
-        if get_year(member) is None and member.id not in dmed_members:
-            try:
-                if member.dm_channel is None:
-                    await member.create_dm()
-                dmchannel = member.dm_channel
+        if get_year(member) is None and member.id not in dmed_members and member.top_role.name != "bot":
+            if member.dm_channel is None:
+                await member.create_dm()
+            dmchannel = member.dm_channel
 
-                await dmchannel.send("Hi I am Itachi and I manage the KeyGenCoders Discussion server and it seems no year is assigned to you, Type !setyear 'Your passout year' to get your role(year)! :) ")
-                await db_connector.put_member(member.id)
-            except:
-                print(member.name)
+            await dmchannel.send("Hi I am Itachi and I manage the KeyGenCoders Discussion server and it seems no year is assigned to you, Type !setyear 'Your passout year' to get your role(year)! :) ")
+            await db_connector.put_member(member.id)
+
 
 
 @bot.command(hidden=True)
