@@ -10,7 +10,7 @@ from discord.ext import commands
 from mongodb_connector import MongoDBConnector
 
 roles = []
-desc = 'A bot made by server admins to manage KeyGEnCoders discussion Server'
+desc = 'A bot made by server admins to manage the KeyGEnCoders discussion Server'
 loop = asyncio.get_event_loop()
 bot = Bot(command_prefix=commands.when_mentioned_or("!"), description=desc, loop=loop)
 db_connector = MongoDBConnector(os.getenv('MONGODB_SRV'), db_name='discord_db', loop=loop)
@@ -19,7 +19,6 @@ guild = None
 with open("colour.json") as file:
     colours_hex = json.load(file)
     colours = [discord.Colour(int(colour, 16)) for colour in colours_hex]
-
 
 
 def get_year(member):
@@ -43,7 +42,7 @@ async def on_ready():
     await bot.change_presence(status=discord.Status.idle, activity=game)
     members = bot.get_all_members()
     for member in members:
-        if member.top_role.is_default() and member.id not in dmed_members:
+        if get_year(member) is None and member.id not in dmed_members:
             if member.dm_channel is None:
                 await member.create_dm()
             dmchannel = member.dm_channel
@@ -67,10 +66,9 @@ async def setyear(ctx, arg):
                 role = role_
                 break
 
-        year_added = any(is_year(role.name) for role in member.roles)
         if role is not None:
 
-            if year_added:
+            if get_year(member) is not None:
                 await ctx.send("You already have a year assigned to you! If you want to change it contact an admin :)")
             else:
                 await member.add_roles(role)
