@@ -1,6 +1,7 @@
 import asyncio
 import discord
 import os
+import sys
 import json
 from discord.ext.commands import Bot
 from checks import is_year
@@ -32,7 +33,7 @@ async def on_ready():
     global roles
     global guild
     dmed_members = await db_connector.get_all_members()
-
+    
     guild = bot.guilds
     guild = guild[0]
     roles = guild.roles
