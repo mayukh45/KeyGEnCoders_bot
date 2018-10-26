@@ -36,7 +36,7 @@ async def on_ready():
     guild = bot.guilds
     guild = guild[0]
     roles = guild.roles
-    game = discord.Game(name="Judgement Day")
+    game = discord.Game(name="Amaterasu")
     await bot.change_presence(status=discord.Status.idle, activity=game)
     members = bot.get_all_members()
     for member in members:
@@ -44,7 +44,7 @@ async def on_ready():
             if member.dm_channel is None:
                 await member.create_dm()
             dmchannel = member.dm_channel
-            await dmchannel.send("Hey Warrior, It seems no roles is assigned to you, Type !setyear 'Your passout year' to get your role! :) ")
+            await dmchannel.send("Hi I am Itachi and I manage this server and it seems no year is assigned to you, Type !setyear 'Your passout year' to get your role(year)! :) ")
             await db_connector.put_member(member.id)
 
 
@@ -127,7 +127,7 @@ async def on_member_join(member):
     if member.dm_channel is None:
         await member.create_dm()
     dmchannel = member.dm_channel
-    await dmchannel.send("Welcome to KeyGEnCoders Server!, Type !setyear <Your passout year> to get started :)\nYou can also set your nickname in server by !setnick <Your desired nickname>")
+    await dmchannel.send("Welcome to KeyGEnCoders Server!, I am Itachi and I manage this server, Type !setyear <Your passout year> to get started :)\nYou can also set your nickname in server by !setnick <Your name>")
 
 
 bot.run(os.getenv('TOKEN'))
