@@ -32,7 +32,7 @@ async def on_ready():
     global roles
     global guild
     dmed_members = await db_connector.get_all_members()
-    if sys.argv[1]=="--dev":
+    if len(sys.argv) > 1 and sys.argv[1]=="--dev":
         guild = bot.get_guild(498952819034816542)
     else:
         guild = bot.get_guild(484037136501178368)
