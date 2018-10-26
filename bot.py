@@ -101,7 +101,7 @@ async def memberstats(ctx):
 @bot.command(hidden=True)
 async def setcurr(ctx,arg):
     """
-    Yearly update of colour (Only for admins)
+    Yearly update of colours (Only for admins)
     """
     global colours
     if is_year(arg):
