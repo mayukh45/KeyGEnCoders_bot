@@ -130,7 +130,7 @@ async def on_member_join(member):
     if member.dm_channel is None:
         await member.create_dm()
     dmchannel = member.dm_channel
-    await dmchannel.send("Welcome to KeyGEnCoders Server!, I am Itachi and I manage this server, Type !setyear <Your passout year> to get started :)\nYou can also set your nickname in server by !setnick <Your name>")
+    await dmchannel.send("Welcome to the KeyGEnCoders Server!, I am Itachi and I manage this server, Type !setyear <Your passout year> to get started :)\nYou can also set your nickname in the server by !setnick <Your name>")
 
 
 bot.run(os.getenv('TOKEN'))
