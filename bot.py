@@ -69,7 +69,7 @@ async def setyear(ctx, arg):
         if role is not None:
 
             if get_year(member) is not None:
-                await ctx.send("You already have a year assigned to you! If you want to change it contact an admin :)")
+                await ctx.send("You already have an year assigned to you! If you want to change it contact an admin :)")
             else:
                 await member.add_roles(role)
                 await ctx.send("Year added!")
