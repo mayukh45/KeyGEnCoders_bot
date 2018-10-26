@@ -33,9 +33,11 @@ async def on_ready():
     global roles
     global guild
     dmed_members = await db_connector.get_all_members()
-    
-    guild = bot.guilds
-    guild = guild[0]
+    if sys.argv[1]=="--dev":
+        guild = bot.get_guild(498952819034816542)
+    else:
+        guild = bot.get_guild(484037136501178368)
+
     roles = guild.roles
     game = discord.Game(name="Amaterasu")
     await bot.change_presence(status=discord.Status.idle, activity=game)
