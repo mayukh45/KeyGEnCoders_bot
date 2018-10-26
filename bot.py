@@ -46,8 +46,11 @@ async def on_ready():
             if member.dm_channel is None:
                 await member.create_dm()
             dmchannel = member.dm_channel
-            await dmchannel.send("Hi I am Itachi and I manage the KeyGenCoders Discussion server and it seems no year is assigned to you, Type !setyear 'Your passout year' to get your role(year)! :) ")
-            await db_connector.put_member(member.id)
+            try:
+                await dmchannel.send("Hi I am Itachi and I manage the KeyGenCoders Discussion server and it seems no year is assigned to you, Type !setyear 'Your passout year' to get your role(year)! :) ")
+                await db_connector.put_member(member.id)
+            except:
+                print(member.name)
 
 
 @bot.command(hidden=True)
