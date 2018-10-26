@@ -43,10 +43,11 @@ async def on_ready():
     members = bot.get_all_members()
     for member in members:
         if get_year(member) is None and member.id not in dmed_members:
-            if member.dm_channel is None:
-                await member.create_dm()
-            dmchannel = member.dm_channel
             try:
+                if member.dm_channel is None:
+                    await member.create_dm()
+                dmchannel = member.dm_channel
+
                 await dmchannel.send("Hi I am Itachi and I manage the KeyGenCoders Discussion server and it seems no year is assigned to you, Type !setyear 'Your passout year' to get your role(year)! :) ")
                 await db_connector.put_member(member.id)
             except:
