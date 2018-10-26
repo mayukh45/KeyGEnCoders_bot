@@ -84,7 +84,8 @@ async def setyear(ctx, arg):
 async def setnick(ctx, arg):
     """Sets nickname of a member"""
     member = guild.get_member(ctx.message.author.id)
-    await member.edit(nick=arg)
+    message = ctx.message.content
+    await member.edit(nick=" ".join(message.split(" ")[1:]))
     await ctx.send("Nickname added!")
 
 
@@ -129,6 +130,6 @@ async def on_member_join(member):
         await member.create_dm()
     dmchannel = member.dm_channel
     await dmchannel.send("Welcome to the KeyGEnCoders Server! I am Itachi and I manage this server.\nType `!setyear <Your passout year>` to get started :)\nYou can also set your nickname in the server by `!setnick <Your name>`")
-
+    await db_connector.put_member(member.id)
 
 bot.run(os.getenv('TOKEN'))
