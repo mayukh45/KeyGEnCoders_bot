@@ -19,4 +19,5 @@ class MongoDBConnector:
         return [member['id'] for member in members]
 
     async def remove_member(self,member_id):
+        """Removes ID of member leaving the server"""
         await self.db.members.delete_one({'id':member_id})
