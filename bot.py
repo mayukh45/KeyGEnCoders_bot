@@ -40,7 +40,7 @@ async def on_ready():
     roles = guild.roles
     game = discord.Game(name="Amaterasu")
     await bot.change_presence(status=discord.Status.idle, activity=game)
-    members = bot.get_all_members()
+    members = guild.members
     for member in members:
         if get_year(member) is None and member.id not in dmed_members and member.top_role.name != "bot":
             if member.dm_channel is None:
