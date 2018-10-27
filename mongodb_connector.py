@@ -17,3 +17,6 @@ class MongoDBConnector:
         cursor = self.db.members.find()
         members = await cursor.to_list(length=None)
         return [member['id'] for member in members]
+
+    async def remove_member(self,member_id):
+        await self.db.members.delete_one({'id':member_id})
