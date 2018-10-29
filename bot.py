@@ -141,6 +141,7 @@ async def on_member_remove(member):
 
 @bot.command()
 async def prune(ctx, arg):
+    """Kicks all all the inactive members from the guild"""
     if ctx.message.author.id == guild.owner_id:
         if arg == "estimate":
             await ctx.send(await guild.estimate_prune_members())
