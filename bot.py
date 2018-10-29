@@ -133,8 +133,21 @@ async def on_member_join(member):
     await dmchannel.send("Welcome to the KeyGEnCoders Server! I am Itachi and I manage this server.\nType `!setyear <Your passout year>` to get started :)\nYou can also set your nickname in the server by `!setnick <Your name>`")
     await db_connector.put_member(member.id)
 
+
 @bot.event
 async def on_member_remove(member):
     await  db_connector.remove_member(member.id)
+
+
+@bot.command()
+async def prune(ctx, arg):
+    if ctx.message.author.id == guild.owner_id:
+        if arg == "estimate":
+            await ctx.send(await guild.estimate_prune_members())
+        elif arg == "yes":
+            await guild.prune_members()
+            await ctx.send("Done")
+    else:
+        await ctx.send("Only guild owner can use this command")
 
 bot.run(os.getenv('TOKEN'))
