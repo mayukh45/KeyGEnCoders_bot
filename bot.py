@@ -10,7 +10,7 @@ from discord.ext import commands
 from mongodb_connector import MongoDBConnector
 
 roles = []
-desc = 'A bot made by server admins to manage the KeyGEnCoders discussion Server'
+desc = 'A bot made by server Admins to manage the KeyGEnCoders discussion Server'
 loop = asyncio.get_event_loop()
 bot = Bot(command_prefix=commands.when_mentioned_or("!"), description=desc, loop=loop)
 db_connector = MongoDBConnector(os.getenv('MONGODB_SRV'), db_name='discord_db', loop=loop)
@@ -71,12 +71,12 @@ async def setyear(ctx, arg):
         if role is not None:
 
             if get_year(member) is not None:
-                await ctx.send("You already have an year assigned to you! If you want to change it contact an admin :)")
+                await ctx.send("You already have an year assigned to you! If you want to change it contact an Admin :)")
             else:
                 await member.add_roles(role)
                 await ctx.send("Year added!")
         else:
-            await ctx.send("Oops there are no such roles now, Please contact any admin for assistance")
+            await ctx.send("Oops there are no such roles now, Please contact any Admin for assistance")
 
     else:
         await ctx.send("The correct format is !setyear YYYY ")
@@ -103,7 +103,7 @@ async def memberstats(ctx):
 @bot.command(hidden=True)
 async def setcurr(ctx,arg):
     """
-    Yearly update of colours (Only for admins)
+    Yearly update of colours (Only for Admins)
     """
     global colours
     if is_year(arg):
@@ -113,7 +113,7 @@ async def setcurr(ctx,arg):
         return
 
     member = guild.get_member(ctx.message.author.id)
-    if member.top_role.name != "admin":
+    if member.top_role.name != "Admin":
         await ctx.send("You don't have permissions to use this command")
     else:
         for role in roles:
