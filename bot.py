@@ -144,7 +144,7 @@ async def prune(ctx, arg):
     """Kicks all the inactive members from the guild"""
     if ctx.message.author.id == guild.owner_id:
         if arg == "estimate":
-            await ctx.send(await guild.estimate_prune_members())
+            await ctx.send(await guild.estimate_pruned_members())
         elif arg == "yes":
             await guild.prune_members()
             await ctx.send("Done")
